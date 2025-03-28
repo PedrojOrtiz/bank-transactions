@@ -1,5 +1,6 @@
 package ec.tcs.banktransactions.web.controller;
 
+import ec.tcs.banktransactions.application.dto.CuentaDTO;
 import ec.tcs.banktransactions.domain.model.Cuenta;
 import ec.tcs.banktransactions.domain.repository.CuentaRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -44,8 +45,8 @@ class CuentaControllerTest {
 
     @Test
     void testIntegrationCuentaDeleteCreateReadRepositoryController() {
-        ResponseEntity<Cuenta> response = restTemplate
-                .getForEntity("/cuentas/{id}", Cuenta.class, cuenta.getId());
+        ResponseEntity<CuentaDTO> response = restTemplate
+                .getForEntity("/cuentas/{id}", CuentaDTO.class, cuenta.getId());
         assertEquals(HttpStatus.OK.value(), response.getStatusCode().value());
         assertNotNull(response.getBody());
         assertEquals(cuenta.getNumeroCuenta(), response.getBody().getNumeroCuenta());
