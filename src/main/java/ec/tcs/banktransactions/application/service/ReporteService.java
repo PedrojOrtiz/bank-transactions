@@ -9,6 +9,7 @@ import ec.tcs.banktransactions.domain.repository.CuentaRepository;
 import ec.tcs.banktransactions.domain.repository.MovimientoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -25,6 +26,7 @@ public class ReporteService {
     private final CuentaRepository cuentaRepository;
     private final ClienteService clienteService;
 
+    @Transactional
     public List<EstadoCuentaDTO> generarReporte(LocalDate fechaInicial, LocalDate fechaFinal, String... clienteId) {
 
         log.info("Generando reporte");
