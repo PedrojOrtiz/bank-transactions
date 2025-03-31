@@ -15,7 +15,6 @@ import java.util.Optional;
 @Repository
 public interface CuentaRepository extends JpaRepository<Cuenta, Long> {
 
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
     List<Cuenta> findByClienteId(String clienteId);
 
     @Modifying
@@ -23,6 +22,7 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Long> {
     @Query("DELETE FROM Cuenta c WHERE c.clienteId = :clienteId")
     void deleteByClienteId(String clienteId);
 
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     Optional<Cuenta> findByNumeroCuenta(String numeroCuenta);
 
 }
