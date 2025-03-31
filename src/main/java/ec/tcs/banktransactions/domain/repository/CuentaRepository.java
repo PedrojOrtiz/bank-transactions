@@ -15,6 +15,7 @@ import java.util.Optional;
 @Repository
 public interface CuentaRepository extends JpaRepository<Cuenta, Long> {
 
+    @Lock(LockModeType.PESSIMISTIC_READ)
     List<Cuenta> findByClienteId(String clienteId);
 
     @Modifying
