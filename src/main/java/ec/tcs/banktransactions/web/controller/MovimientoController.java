@@ -16,9 +16,9 @@ public class MovimientoController {
 
     private final MovimientoService movimientoService;
 
-    @PostMapping
-    public ResponseEntity<MovimientoDTO> crearMovimiento(@RequestBody MovimientoDTO movimientoDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(movimientoService.createMovimiento(movimientoDTO));
+    @PostMapping("/validar")
+    public ResponseEntity<MovimientoDTO> validate(@RequestBody MovimientoDTO movimientoDTO) {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(movimientoService.validateMovimiento(movimientoDTO));
     }
 
     @GetMapping("/{id}")

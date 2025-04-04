@@ -20,6 +20,7 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Long> {
 
     @Modifying
     @Transactional
+    //@Query("UPDATE Cuenta c SET c.estado = false WHERE c.clienteId = :clienteId")
     @Query("DELETE FROM Cuenta c WHERE c.clienteId = :clienteId")
     void deleteByClienteId(String clienteId);
 

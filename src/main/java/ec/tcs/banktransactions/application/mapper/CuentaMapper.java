@@ -11,7 +11,7 @@ public interface CuentaMapper {
 
     CuentaMapper INSTANCE = Mappers.getMapper(CuentaMapper.class);
 
-    @Mapping(source = "movimientos", target = "movimientos")
+    @Mapping(source = "movimientos", target = "movimientos", ignore = true)
     CuentaDTO mapToDTO(Cuenta cuenta);
 
     @Mapping(source = "movimientos", target = "movimientos")

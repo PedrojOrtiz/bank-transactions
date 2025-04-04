@@ -16,7 +16,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DataNotFound.class)
     public ResponseEntity<?> dataNotFoundExceptionHandling(Exception exception, WebRequest request) {
-        return new ResponseEntity<>(new ErrorDTO(LocalDateTime.now(), exception.getMessage(), request.getDescription(false)), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorDTO(LocalDateTime.now(), exception.getMessage(), request.getDescription(false)), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(InsufficientBalance.class)

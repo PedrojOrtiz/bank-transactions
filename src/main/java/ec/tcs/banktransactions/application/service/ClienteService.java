@@ -2,6 +2,7 @@ package ec.tcs.banktransactions.application.service;
 
 import ec.tcs.banktransactions.application.dto.ClienteDTO;
 import ec.tcs.banktransactions.application.exception.DataNotFound;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -10,9 +11,10 @@ import reactor.core.publisher.Mono;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ClienteService {
 
-    private final WebClient webClient = WebClient.create("http://localhost:8080");
+    private final WebClient webClient;
 
     /**
      * Método síncrono que obtiene la información de un cliente por su id

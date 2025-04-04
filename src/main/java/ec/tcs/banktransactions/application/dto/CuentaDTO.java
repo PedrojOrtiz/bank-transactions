@@ -1,7 +1,6 @@
 package ec.tcs.banktransactions.application.dto;
 
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 

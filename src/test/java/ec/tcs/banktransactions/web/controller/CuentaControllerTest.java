@@ -27,15 +27,22 @@ class CuentaControllerTest {
 
     @BeforeEach
     void setUp() {
+
+        /// Create a new account test
         cuenta = Cuenta.builder()
                 .numeroCuenta("CTA123")
                 .tipoCuenta("Ahorros")
                 .clienteId("CLI123")
                 .saldoInicial(1000.0)
-                .estado(true)
+                .estado(false)
                 .build();
+
+        /// Clean that account if it exists
         cuentaRepository.deleteByClienteId(cuenta.getClienteId());
+
+        /// Save the new test account
         cuentaRepository.save(cuenta);
+
     }
 
     @AfterEach

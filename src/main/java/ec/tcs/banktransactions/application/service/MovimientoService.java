@@ -1,6 +1,7 @@
 package ec.tcs.banktransactions.application.service;
 
 import ec.tcs.banktransactions.application.dto.MovimientoDTO;
+import ec.tcs.banktransactions.application.exception.DataNotFound;
 import ec.tcs.banktransactions.application.exception.InsufficientBalance;
 import ec.tcs.banktransactions.application.mapper.CuentaMapper;
 import ec.tcs.banktransactions.application.mapper.MovimientoMapper;
@@ -12,6 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 
 @Service
 public class MovimientoService extends AbstractService<Movimiento, Long, MovimientoDTO, MovimientoRepository> {
@@ -37,11 +40,18 @@ public class MovimientoService extends AbstractService<Movimiento, Long, Movimie
 
     @Transactional
     public MovimientoDTO createMovimiento(MovimientoDTO movimientoDTO) {
+        /// Save transaction
+        return save(
+          validateMovimiento(movimientoDTO)
+        );
+    }
 
+    @Transactional
+    public MovimientoDTO validateMovimiento(MovimientoDTO movimientoDTO) {
         /// Account validation
         Cuenta cuenta = cuentaRepository
                 .findByNumeroCuenta(movimientoDTO.getNumeroCuenta())
-                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada"));
+                .orElseThrow(() -> new DataNotFound("Cuenta no encontrada"));
 
         /// Balance validation
         double saldoActual = cuenta.getSaldoInicial() + repository.sumSaldoByCuentaId(cuenta.getId());
@@ -51,16 +61,14 @@ public class MovimientoService extends AbstractService<Movimiento, Long, Movimie
             throw new InsufficientBalance("Saldo insuficiente");
         }
 
-        /// Save transaction
-        return save(
-          MovimientoDTO.builder()
-                  .fecha(movimientoDTO.getFecha())
-                  .tipoMovimiento(movimientoDTO.getTipoMovimiento())
-                  .valor(movimientoDTO.getValor())
-                  .saldo(nuevoSaldo)
-                  .cuenta(CuentaMapper.INSTANCE.mapToDTO(cuenta))
-                  .build()
-        );
+        /// Return valid transaction
+        return MovimientoDTO.builder()
+                .fecha(LocalDate.now())
+                .tipoMovimiento(movimientoDTO.getTipoMovimiento())
+                .valor(movimientoDTO.getValor())
+                .saldo(nuevoSaldo)
+                .cuenta(CuentaMapper.INSTANCE.mapToDTO(cuenta))
+                .build();
 
     }
 
