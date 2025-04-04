@@ -1,9 +1,3 @@
-
----
-
-### 📁 `bank-transactions` – README.md
-
-```markdown
 # 💳 Bank Transactions Microservice
 
 This microservice is responsible for managing **bank accounts** and **financial transactions**. It collaborates with the `bank-clients` microservice to validate and process transactions using **asynchronous messaging** and **reactive HTTP** communication.
@@ -43,15 +37,16 @@ This microservice is responsible for managing **bank accounts** and **financial 
 This service does **not** expose a direct controller to create transactions.
 
 Instead:
+
 1. A transaction is initiated via a **REST endpoint on `bank-clients`**.
 2. `bank-clients`:
-   - Validates the client and transaction data.
-   - If valid, **publishes the transaction to a RabbitMQ queue**.
+    - Validates the client and transaction data.
+    - If valid, **publishes the transaction to a RabbitMQ queue**.
 3. `bank-transactions`:
-   - **Listens to the queue via a RabbitMQ listener**.
-   - Processes the transaction when it is received from the queue.
+    - **Listens to the queue via a RabbitMQ listener**.
+    - Processes the transaction when it is received from the queue.
 
-This ensures validation is centralized in `bank-clients`, while processing remains isolated in `bank-transactions`.
+This ensures that all validation logic resides in `bank-clients`, while transaction execution is handled solely by `bank-transactions`.
 
 ---
 
@@ -59,9 +54,9 @@ This ensures validation is centralized in `bank-clients`, while processing remai
 
 This service is **automatically deployed** using the `deploy.sh` script from the `bank-clients` repository.
 
-> ⚠️ **Note:** Make sure both projects are in the **same root directory** before executing the deployment script.
+> ⚠️ **Note:** Both projects must be in the **same root directory** before running the script.
 
-### 🔧 Run
+### 🔧 To Deploy
 
 ```bash
 cd bank-clients
